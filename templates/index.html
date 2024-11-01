@@ -1,0 +1,121 @@
+{% extends 'common/base.html' %}
+
+{% block title %} 저요🤚 {% endblock %}
+
+{% block extra_css %}
+    <!-- 페이지 스타일 -->
+    <!-- <link rel="stylesheet" href="/static/css/index.css/?"> -->
+    <link rel="stylesheet" href="/static/css/index.css">
+{% endblock %}
+
+
+{% block content %}
+
+    <!-- Main -->
+    <div id="main-intro">
+        <!-- <img src="img/main/main_title.png" alt="title" class="main-title"> -->
+        <h2 id="main-title" class="font">저요🤚</h2>
+        <h4 id="main-subtitle" class="font">손을 들고 경매에 참가해보세요!<br> 좋은 물건, 좋은 서비스! 좋은 가격으로 찾아가기</h4>
+        <!-- <button class="detail-btn">자세히보기</button> -->
+        <!-- <div id="detail-btn">자세히보기</div> -->
+    </div>
+
+
+    <!-- Keyword -->
+    <div id="keywords" class="contents main-contents">
+        <img src="/static/img/auction.png" alt="" class="exp-imgs">
+
+        <div class="des-box">
+            <h2 class="keyword-title">저요🤚</h2>
+            <div class="keyword-content">
+                <div class="keyword-item">
+                    <h4>내가 원하는 가격에 물건을 살 수는 없을까?</h4>
+                    <p>내가 원하는 가격을 제시하고 구매할 수 있습니다.</p>
+                    <p>고정된 가격에 물건을 사기 보다 합리적인 가격에 구매해보세요!</p>
+                </div>
+                <div class="keyword-item">
+                    <h4>좀 더 좋은 가격에 풀건을 팔 수는 없을까?</h4>
+                    <p>자신이 원하는 가격의 하한선을 정해 팔 수 있습니다.</p>
+                    <p>다른 사람들에게 좀 더 좋은 가격을 받아보세요!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+
+
+
+    <!-- Explanation -->
+    <div id="explanation" class="contents main_contents">
+        <h2>
+            🤚 서비스를 이용해 보세요.
+        </h2>
+        <div class="exp-box">
+            <a href="/proser/list?op=1" style="text-decoration:none;">
+                <div class="exp-content">
+                    <div class="exp-text">
+                        <h3>Service</h3>
+                        <h4>간단한 일 해결부터 배우는 재미까지 느껴보세요!</h4>
+                        <p>청소, 클래스, 분리수거 등</p>
+                        <p>사용자에게 원하는 서비스를 제공합니다.</p>                    
+                    </div>
+                    <img src="/static/img/service.png" alt="" class="exp-imgs">
+                </div>
+            </a>
+
+            <a href="/proser/list?op=0" style="text-decoration:none;">
+                <div class="exp-content">
+                    <div class="exp-text">
+                        <h3>Product</h3>
+                        <h4>원하는 제품들을 찾아보고 가격을 제시해보세요!</h4>
+                        <p>서로 간에 제품을 제공합니다.</p>
+                        <p>경매 형태로 제공되는 서비스입니다.</p>     
+                    </div>
+                    <img src="/static/img/product.png" alt="" class="exp-imgs">
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <hr>
+
+    <section id="test-data" class="contents main-contents">
+        <div class="test-content">
+            <h2>직접 서비스를 제공하고 물건을 판매하고 싶으신가요?</h2>
+            <img src="/static/img/box.png" alt="">
+            <a href="/login"><div class="link-btn">가입하고 물건 등록하러 가기📦</div></a>
+        </div>
+    </section>
+
+{% endblock %}
+
+<!-- footer -->
+
+{% block extra_script %} 
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    var imageBox = document.getElementById('main-intro');
+    var images = [
+        'url(/static/img/main/main1.jpg)',
+        'url(/static/img/main/main2.jpg)',
+        'url(/static/img/main/main3.jpg)',
+        'url(/static/img/main/main4.jpg)',
+        'url(/static/img/main/main5.jpg)',
+        'url(/static/img/main/main6.jpg)',
+        'url(/static/img/main/main7.jpg)'
+    ];
+    var currentIndex = 0;
+
+    function changeBackgroundImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        imageBox.style.backgroundImage = images[currentIndex];
+    }
+
+    setInterval(changeBackgroundImage, 3000); // 3초마다 이미지 변경
+});
+
+</script>
+{% endblock %}

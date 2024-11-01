@@ -1,0 +1,181 @@
+#explanation {
+    padding: 80px 0; 
+    margin-bottom: 100px;
+}
+
+#explanation h2{
+    margin-top: 40px;
+    font-weight: 600;
+    color: black;
+    text-align: center;
+}
+
+
+#pro .exp-box {
+    display: flex;
+    padding: 40px 20px;
+    justify-content: center;
+}
+
+#pro .exp-content{
+    border: 1px solid whitesmoke;
+    box-shadow: 0px 0px 10px 2px #f1f1f1;
+    border-radius: 1px;
+    margin: 20px;
+    padding: 40px;
+    width: 500px;
+    max-width: 500px;
+    min-width: 500px;
+    max-height: 500px;
+    text-align: left;
+    text-decoration: none;
+}
+
+
+textarea {
+    max-width: 100%;
+    min-width: 100%;
+    display: block;
+    min-height: 200px;
+    padding: 10px;
+}
+
+button {
+    margin-top: 20px;
+}
+
+.img_wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow:hidden;
+}
+
+.img_wrap img{
+    height:100%;
+    object-fit:cover;
+}
+
+
+/* 아래부터 작성 */
+.exp-text .black {
+    color: black;
+}
+
+.exp-text .right{
+    text-align: right;
+}
+
+.exp-text .des {
+    margin-top: 16px;
+}
+
+
+.exp-text .bold {
+    font-weight: 600;
+}
+
+
+.exp-text .inner-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 350px;
+}
+
+
+.btn-box {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+
+.btn-box button {
+    margin: 20px 0 0 10px;
+}
+
+
+
+/* 제시자들 */
+#people {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+#people .info_box {
+    width: 80%;
+    min-width: 800px;
+    max-width: 1050px;
+}
+
+#people .exp-content {
+    padding: 20px 40px;
+}
+
+
+
+
+#people span {
+    color: rgb(182, 182, 182);
+}
+
+#people .exp-text {
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: space-between;
+    /* flex-wrap: wrap; */
+    
+}
+
+#people .price {
+    font-size: 20px;
+}
+
+#people .bx {
+    margin: 1px 0;
+}
+
+#people .margin-lf{
+    margin-left: 10px;
+    color:black;
+}
+
+
+
+
+/* 팝업 */
+.popup-overlay {
+    display: none; /* 기본적으로 팝업을 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px 50px 40px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 500px;
+    margin: 300px auto;
+}
+
+.close-btn {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.input-price {
+    width: 400px;
+    margin: 10px 0 10px;
+    text-align: left;
+    color: black;
+}

@@ -1,0 +1,293 @@
+{% extends 'common/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block extra_css %}
+{% load humanize %}
+<link rel="stylesheet" href="/static/css/login.css">
+<!-- <link rel="stylesheet" href="/static/css/proser/create.css"> -->
+<link rel="stylesheet" href="/static/css/proser/detail.css">
+{% endblock %}
+
+
+{% block content %}
+
+    <div id="explanation" class="contents main_contents">
+        <!-- 팝업 -->
+        <div id="popup" class="popup-overlay">
+            <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <form onSubmit="return goprice(this);" enctype="multipart/form-data">
+                    <!-- 서비스아이디로 바꾸기 -->
+                    <input type="hidden" name="sid" value="{{ sid }}">
+                    <!-- 유저명으로 바꾸기 -->
+                    <input type="hidden" name="offeruserid" value={{ request.session.id }}>
+                    <h2 style="text-align: left;">가격 제시</h2>
+                    <p style="text-align: left;"></p>
+                    <div>
+                        <p style="margin: 0; text-align: left; color: black;">원하시는 금액을 입력하세요.</p>
+                        <input class="input-price" type="number" name="maxval">
+                        <p style="margin: 0; text-align: left; color: black;">기타사항이 있으시다면 입력해주세요.</p>
+                        <input class="input-price" type="text" name="des">
+                    </div>
+                    <button id="go-price" class="custom-btn btn-4"><span>가격 제시</span></button>
+                </form>   
+            </div>
+        </div>
+        <!-- 팝업끝 -->
+        
+        <!-- 제품 설명 -->
+        <div class="exp-box" id="pro">
+            <div class="exp-content img_wrap" id="img_wrap">
+                <img id="imgon" src="https://g-oss-jeoyo-qrxlf.run.goorm.site/media/{{ img }}">
+            </div>
+            <div class="exp-content info_box">
+                <div class="exp-text">
+                    <h3>{{ name }}</h3>
+                    <div class="inner-box">
+                        <div>
+                            <p class="right">{{ date }}</p>
+                            <p class="right">{{ uid }}</p>
+                        </div>
+
+                        <div class="des"><p class="black">{{ des }}</p></div>
+                        
+                        <div>
+                            {% if auctions %}
+                            <label name="maxval">현재 최고가</label>
+                            {% else %}
+                            <label name="maxval">최소 제시 금액</label>
+                            {% endif %}
+                            <p style="color:#428BF9; font-weight:900;">{{maxval | intcomma}}</p>
+                        </div>
+    
+
+                        <div class="btn-box">
+                            {% if serviceend == True %}
+                            <button class="custom-btn btn-4"><span style="color:#0046f3b3; font-weight: 600;">입찰 종료</span></button>
+                            {% elif request.session.id and request.session.id == uid %}
+                            	{% if usecredit == 0 %}
+                            <button id="use-credit" class="custom-btn btn-4"><span>크레딧 사용</span></button>
+                            	{% endif %}
+                                {% if auctions %}
+                            <button id="finish" class="custom-btn btn-4"><span style="color: #004e54d6; font-weight: 600;">낙찰</span></button>
+                                {% else %}
+                            <button id="nofinish" class="custom-btn btn-4"><span style="color: #004e54d6; font-weight: 600;">낙찰</span></button>
+                                {% endif %}
+                            <!-- 작성자랑 이름이 다른 경우 -->
+                            {% elif request.session.id %}
+                            <button id="price-btn" class="custom-btn btn-4"><span>금액 제시</span></button>
+                            {% else %}
+                            <button id="gologin" class="custom-btn btn-4"><span>금액 제시</span></button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+        
+        <!-- 제시한 사람 목록 -->
+        <div class="exp-box" id="people">
+        {% if auctions %}
+        <h4 style="font-weight: 600;"> 경매 참여 중🚩</h4>
+        {% else %}
+        <h4 style="font-weight: 600; color:grey;"> 현재 경매 참가자가 없습니다.</h4>
+        {% endif %}
+            {% for lt in auctions  %}
+            <!-- 제시한 사람 -->
+            <div class="exp-content info_box">
+                <div class="exp-text">
+                    <div>
+                        <div class="bx">
+                            <span>제시자</span> <span class="margin-lf">{{lt.buyer}}</span>
+                        </div>
+                        <div class="bx">
+                            <span>제시일</span> <span class="margin-lf">{{lt.date}}</span>
+                        </div>
+                        <div class="bx">
+                            <span style="color:black;"> {{lt.des}} </span>
+                        </div>
+                    </div>
+                    <div>
+                        <label name="maxval" class="right">제시가</label>
+                        <div class="right price"><p style="color:#0f9ea8; font-weight:900; font-size: 20px;">{{lt.offerprice|intcomma}}</p></div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- 제시한 사람 끝 -->
+            {% endfor %}
+        </div>
+            
+    </div>
+
+
+
+
+
+{% endblock %}
+
+<!-- footer -->
+
+{% block extra_script %} 
+<script>
+    //이미지 미리보기
+    var sel_file;
+ 
+    $(document).ready(function() {
+        $("#img").on("change", handleImgFileSelect);
+    });
+ 
+    function handleImgFileSelect(e) {
+        
+        const box = document.querySelector(".info_box");
+        box.style.maxWidth = "500px";
+        
+        const imgbox = document.getElementById('img_wrap');
+        imgbox.style.maxWidth = "500px";
+        imgbox.style.display = "flex";
+        
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+ 
+        var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
+ 
+        filesArr.forEach(function(f) {
+            if (!f.type.match(reg)) {
+                alert("확장자는 이미지 확장자만 가능합니다.");
+                return;
+            }
+ 
+            sel_file = f;
+ 
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#imgon").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+</script>
+
+<script>
+    function goprice(obj) {
+      if (!obj.maxval.value) {
+        alert("가격을 입력해주세요.");
+        return false;
+      }  
+        
+        
+      var formData = new FormData();
+      formData.append('maxval', obj.maxval.value);
+      formData.append('offeruserid', obj.offeruserid.value);
+      formData.append('sid', obj.sid.value);
+      formData.append('des', obj.des.value);
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+      $.ajax({
+        type: 'PUT',
+        url: 'https://g-oss-jeoyo-qrxlf.run.goorm.site/api/Service/',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (ajax_data) {
+            //해당 리스트로 이동하도록 변경
+            alert("가격 제시가 완료되었습니다.");
+          window.location.href = '/proser/detail?sid={{sid}}';
+        },
+        error: function (xhr) {
+            // alert(status, error); 
+            switch(xhr.status) {
+              case 404 :
+                alert("현재 최고 금액보다 높은 금액을 제시해주세요.");
+                break;
+              case 405 :
+                alert("보유한 크레딧이 부족합니다.");
+                break;
+            }
+        }
+      });
+      return false;
+    }
+    
+
+
+    $(document).ready(function() {
+        //팝업
+        // 팝업 열기 버튼 클릭 시
+        $('#price-btn').click(function() {
+            $('#popup').fadeIn(); // 팝업을 표시
+        });
+
+        // 팝업 닫기 버튼 클릭 시
+        $('.close-btn').click(function() {
+            $('#popup').fadeOut(); // 팝업을 숨김
+        });
+
+        // 팝업 외부 클릭 시 팝업 닫기
+        $(window).click(function(event) {
+            if ($(event.target).is('#popup')) {
+                $('#popup').fadeOut(); // 팝업을 숨김
+            }
+        });
+
+
+
+        //크레딧 사용
+        $('#use-credit').click(function() {
+            if (confirm("크레딧을 사용하시겠습니까?\n🪙500 크레딧이 사용됩니다.")) {
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://g-oss-jeoyo-qrxlf.run.goorm.site/api/UsecreditAPI?uid={{uid}}&sid={{sid}}', // 여기서 적절한 URL로 대체
+                    success: function(data) {
+                        alert("🪙500 크레딧이 사용되었습니다.");
+                        window.location.href = '/proser/list?op={{op}}';
+                    },
+                    error: function (xhr) {
+                        // alert(status, error); 
+                        switch(xhr.status) {
+                          case 404 :
+                            alert("크레딧이 부족합니다.");
+                            break;
+                        }
+                    }
+                });
+            }
+        });
+
+
+        //낙찰
+        $('#finish').click(function() {
+            if (confirm("정말로 입찰을 종료하시겠습니까?")) {
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://g-oss-jeoyo-qrxlf.run.goorm.site/api/ServiceEndAPI?sid={{ sid }}', // 여기서 적절한 URL로 대체
+                    success: function(data) {
+                        alert("낙찰이 완료되었습니다.");
+                        window.location.href = '/proser/list?op={{op}}';
+                    },
+                    error: function(xhr, status, error) {
+                        alert("낙찰 처리 중 오류가 발생했습니다.");
+                    }
+                });
+            }
+        });
+
+        $('#nofinish').click(function() {
+            alert("현재 경매 참가자가 없습니다.");
+        });
+
+        $('#gologin').click(function() {
+            if (alert("로그인이 필요한 서비스입니다.")) {
+                window.location.href = '/login';;
+            }
+        });
+
+
+    });
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'common/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/login.css">
+{% endblock %}
+
+
+{% block content %}
+
+    <div id="explanation" class="contents main_contents">
+        <h2>
+            Login
+        </h2>
+        <div class="exp-box">
+            <div id="login-box" class="exp-content">
+                <div class="exp-text">
+                    <!-- <h3>Login</h3> -->
+                    <form onSubmit="return login(this);">
+                    {% csrf_token %}
+                        
+                        <div>
+                            <label name="id">ID</label>
+                        	<input type="text" name="id" placeholder="아이디를 입력해주세요.">
+                        
+                            <label name="id">PASSWORD</label>
+                            <input type="password" name="password" placeholder="비밀번호를 입력해주세요.">
+                        	
+                            <a href="/register" class="register-btn"><p>Register</p></a>
+						</div>
+                        
+                        <button class="custom-btn btn-4"><span>Login</span></button>
+                    </form>
+                </div>
+                <!-- <img src="/static/img/product.png" alt="" class="exp-imgs"> -->
+            </div>
+        </div>
+    </div>
+    
+
+
+{% endblock %}
+
+<!-- footer -->
+
+{% block extra_script %} 
+<script>
+    function login(obj) {
+      if (!obj.id.value) {
+        alert("아이디를 입력해주세요.");
+        return false;
+      }
+      if (!obj.password.value) {
+        alert("비밀번호를 입력해주세요.");
+        return false;
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: 'https://g-oss-jeoyo-qrxlf.run.goorm.site/api/Login/',
+        data: {
+          'id': obj.id.value,
+          'password': obj.password.value,
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        success: function (ajax_data) {
+          window.location.href = '/';
+        },
+        error: function (xhr, status, error) {
+            alert("ID 혹은 Password를 확인해주세요.");
+            // alert(status, error); 
+        }
+      });
+      return false;
+    }
+
+</script>
+
+{% endblock %}

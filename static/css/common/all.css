@@ -1,0 +1,86 @@
+/* css 변수 */
+
+:root {
+    --light-grey: #dddddd;
+    --dark-grey: grey;
+    --light-yellow: #ebb012;
+    --dark-yellow: #d39c12;
+    --main-color: #96e4df;
+}
+
+/* 전체스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    /* font-family: 'Open Sans', sans-serif;
+    font-family: 'Oswald', sans-serif; */
+	font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* .width-padding{
+    padding-left: 10%; 
+    padding-right: 10%; 
+} */
+
+/* title and sub title */
+h2 {
+    margin-bottom: 32px; 
+    font-size: 28px;
+    color: var(--light-grey);
+}
+
+a {
+    text-decoration: none;
+}
+
+.font {
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Oswald', sans-serif;
+}
+
+p {
+    color: var(--light-grey);
+}
+
+ul, li {
+    list-style-type: none;
+}
+
+
+/* 스크롤바 디자인 */
+/* 가로 스크롤바 없애기 : css 다시 */
+
+
+
+@keyframes btnShow {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes upAni {
+    0% {
+        bottom: 6px;
+    }
+    25% {
+        bottom: 10px;
+        
+    }
+    50% {
+        bottom: 6px;
+    }
+    75% {
+        bottom: 10px;
+    }
+    100% {
+        bottom: 6px;
+    }
+}

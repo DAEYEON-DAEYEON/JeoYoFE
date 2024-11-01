@@ -1,0 +1,33 @@
+<!-- navbar.html -->
+
+<header>
+<nav id="navbar" class="width-padding"> 
+
+    <!-- <a href="/"><img id="nav-logo" src="/static/img/main_team_logo.png" alt=""></a> -->
+    <div id="navbox">
+        <a href="/" class="nav-bar"><div id="nav-title"><h2 class="font">JEOYO</h2></div></a>
+        <div class="nav-bar">
+            <!-- 수정한 부분 -->
+            <a href="/proser/list?op=0" class="nav-bars">물건거래</a>
+            <a href="/proser/list?op=1" class="nav-bars">서비스거래</a>
+        </div>
+    </div>
+    
+    
+    
+    <div id="userbox">
+        <!--   로그인된 경우, 마이페이지(로그아웃)     -->
+        {% if request.session.id %}
+        <a href="/mypage?uid={{request.session.id}}">{{request.session.id}}의 프로필</a>
+        <a href="/logout?id={{request.session.id}}" style="margin-left: 10px;">로그아웃</a>
+        {% else %}
+        <div id="login-btn">
+            <a href="/login">로그인</a>
+        </div>
+        {% endif%}
+        <!--  -->
+    </div>
+</nav>
+    
+</header>
+

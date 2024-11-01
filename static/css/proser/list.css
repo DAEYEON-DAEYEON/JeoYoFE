@@ -1,0 +1,244 @@
+
+#navbar {
+    border-bottom: 2px solid #418CE9;
+}
+
+
+/* 키워드 설명 */
+#keywords {
+    padding: 80px 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+#keywords img {
+    width: 253px;
+    min-width: 150px;
+    /* height: 310px; */
+    margin-right: 30px;
+}
+
+#keywords h2 {
+    margin: 60px 0 40px;
+    font-weight: 600;
+}
+
+.des-box {
+    margin: 20px 30px;;
+    padding: 40px;
+    width: 490px;
+    min-width: 480px;
+    text-align: left;
+}
+
+.keyword-item {
+    margin: 36px 0;
+}
+
+.keyword-item h4 {
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.keyword-item p {
+    margin: 5px 0;
+    color: rgb(0 0 0 / 76%);
+}
+
+
+
+/* Explanation */
+#explanation {
+    text-align: center;
+    padding: 0px 0 100px; 
+}
+
+#explanation h2{
+    margin-top: 40px;
+    font-weight: 600;
+    color: black;
+    text-align: center;
+    font-size: 24px;
+}
+
+
+.exp-box {
+    display: flex;
+    padding: 40px 10%;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.exp-content{
+    border: 1px solid whitesmoke;
+    box-shadow: 0px 0px 2px 2px #e3e3e3;
+    border-radius: 1px;
+    margin: 20px;
+    padding: 21px;
+    width: 300px;
+    height: 420px;
+    max-height: 380px;
+    text-align: left;
+    text-decoration: none;
+    background-color: white;
+}
+
+.exp-content:hover .exp-imgs
+{
+    scale: 1.1;
+}
+
+.exp-text {
+    height: 120px;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+}
+
+.exp-text h3 {
+    margin: 5px 0;
+    font-weight: 600;
+    color: black;
+}
+
+.exp-text p {
+    color: rgb(103 103 103);
+    margin: 2px 0;
+    font-weight: 300;
+    font-size: 14px; 
+}
+
+.exp-text h4{
+    margin-top: 10px;
+    font-size: 21px; 
+    color: black;
+}
+
+/* 제품/서비스명 */
+.exp-text h5{
+    color: #5e5e5e;
+    font-size: 18px; 
+    font-weight: 600;
+    margin-top: 12px;
+}
+
+.exp-content .img-box {
+    position: relative;
+    
+    width: 100%;
+    height: 207px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow:hidden;
+}
+
+.exp-content .exp-imgs {
+    position: absolute;
+    width: 100%;
+    object-fit: fill;
+    transition: 0.3s ease-in-out;
+    margin-top: 0;
+    min-width: 0;
+    margin-left: 0;
+    border: 20px;
+}
+
+
+
+.exp-content .date-txt {
+    text-align: right;
+    color: rgb(182, 182, 182);
+}
+
+.exp-imgs {
+    margin-top: 36px;
+    text-align: right;
+    min-width: 0;
+    width: 120px;
+    margin-left: 170px;
+}
+
+
+/* 버튼 디자인  */
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  outline: none;
+}
+
+/* 5 */
+.btn-5 {
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+    background: #428BF9;
+    background: linear-gradient(0deg, #428BF9 0%, #428BF9 100%);
+}
+.btn-5:hover {
+    color: #428BF9;
+  background: transparent;
+   box-shadow:none;
+}
+.btn-5:before,
+.btn-5:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #428BF9;
+  box-shadow:
+   -1px -1px 5px 0px #fff,
+   7px 7px 20px 0px #0003,
+   4px 4px 5px 0px #0002;
+  transition:400ms ease all;
+}
+.btn-5:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+
+.btn-5:hover:before,
+.btn-5:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+#tag-box{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.card-tag {
+	padding: 0 5px;
+    border: 1px solid transparent;
+    margin-left: 4px;
+    border-radius: 15px;
+}
+
+.card-tag p{
+    font-size: 13px;
+    font-weight:800;
+    text-align:right;
+    color: whitesmoke;
+}

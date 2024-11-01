@@ -1,0 +1,176 @@
+{% extends 'common/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block extra_css %}
+    <!-- 페이지 스타일 -->
+    <!-- <link rel="stylesheet" href="/static/css/index.css/?"> -->
+    <link rel="stylesheet" href="/static/css/index_2.css">
+    <!-- 화살표아이콘 -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_forward_ios" />
+{% endblock %}
+
+
+{% block content %}
+
+    <!-- Main -->
+    <div id="main-intro">
+        <!-- <img src="img/main/main_title.png" alt="title" class="main-title"> -->
+        <div id="main-title" class="contents">      
+            <h2 class="font">
+                <span class="font">J</span>
+                <span class="font txt">E</span>
+                <span class="font txt">O</span>
+                <span class="font txt">Y</span>
+                <span class="font txt">O</span>
+                <span class="font txt">!</span>
+                <span> <img id="title-hand" src="/static/img/home/hands.png" alt=""> </span>
+            </h2>
+            <!-- <img id="title-hand" src="/static/img/home/hands.png" alt=""> -->
+        </div>
+        <div>
+            <h4 id="main-subtitle">손을 들고 경매에 참가해보세요!<br> 좋은 물건, 좋은 서비스, 좋은 가격으로 찾아가기</h4>
+        </div>
+    </div>
+
+
+    <!-- Keyword -->
+    <div class="keywords contents main-contents">
+        <div class="des-box width-ctl">
+            <img src="/static/img/home/push_button.png" alt="" class="min-img exp-imgs">
+            <h2 class="keyword-title">좋은 가격에 물건을 팔 수는 없을까?</h2>
+            <div class="keyword-content">
+                <div class="keyword-item">
+                    <p>자신이 원하는 가격의 하한선을 정해 팔 수 있어요.</p>
+                    <p>다른 사람들에게 가격을 제시받고</p>
+                    <p>하는 가격에 낙찰해보세요!</p>
+                </div>
+            </div>
+        </div>
+        
+        <img src="/static/img/home/push_button.png" alt="" class="ori-img exp-imgs">
+    </div>
+
+
+    <div class="keywords contents main-contents">
+        <img src="/static/img/home/money.png" alt="" class="ori-img exp-imgs">
+
+        <div class="des-box width-ctl">
+        	<img src="/static/img/home/money.png" alt="" class="min-img exp-imgs">
+            <h2 class="keyword-title">내가 원하는 가격에 살 수는 없을까?</h2>
+            <div class="keyword-content">
+                <div class="keyword-item">
+                    <p>내가 원하는 가격을 제시하고 구매할 수 있어요.</p>
+                    <p>원하는 가격으로 물건과 서비스를 받아보세요!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Explanation -->
+    <div id="explanation" class="contents main_contents">
+        <h2>
+        	사용자들이 올린 서비스와 물품을 확인해보세요.
+        </h2>
+        <div class="exp-box">
+            
+            <div class="exp-content">
+                <div class="exp-text">
+                    <h3>SERVICE</h3>
+                    <h4>간단한 일 해결부터 배우는 재미까지 느껴보세요!</h4>
+                    <!-- <p>청소, 클래스, 분리수거 등 사용자에게 원하는 서비스를 제공합니다.</p> -->
+                    <a class="more" href="/proser/list?op=1" style="text-decoration:none;">
+                        <span class="material-symbols-outlined">arrow_forward_ios</span>
+                    </a>
+                </div>
+                <div id="list-box">
+
+                    <!-- 아이템 반복 -->
+                    {% for lt in services %}
+                    <a href="/proser/detail?sid={{ lt.id }}" style="text-decoration:none;">
+                        <div class="list-item">
+                            <div class="img-box">
+                                {% if lt.img != "" %}
+                                <img src="https://g-oss-jeoyo-qrxlf.run.goorm.site/media/{{ lt.img }}">
+                                {% else %}
+                                <img src="/static/img/home/null-img.png">
+                                {% endif %}
+                            </div>
+                            <div class="text-box">
+                                <h5>{{ lt.name }}</h5> 
+                                <p class="date-txt">{{ lt.des }}</p> 
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+
+            <div class="exp-content">
+                <div class="exp-text">
+                    <h3>PRODUCT</h3>
+                    <h4>원하는 제품들을 찾아보고 가격을 제시해보세요!</h4>
+                    <!-- <p>서로 간에 제품을 제공합니다. 경매 형태로 제공되는 서비스입니다.</p> -->
+                    <a class="more" href="/proser/list?op=0" style="text-decoration:none;">
+                    	<span class="material-symbols-outlined">arrow_forward_ios</span>
+                    </a>
+                </div>
+                <div id="list-box">
+
+                    <!-- 아이템 반복 -->
+                    {% for lt in products %}
+                    <a href="/proser/detail?sid={{ lt.id }}" style="text-decoration:none;">
+                    <div class="list-item" onclick="go-detail({{lt.sid}});">
+                        <div class="img-box">
+                            {% if lt.img != "" %}
+                            <img src="https://g-oss-jeoyo-qrxlf.run.goorm.site/media/{{ lt.img }}">
+                            {% else %}
+                            <img src="/static/img/home/null-img.png">
+                            {% endif %}
+                        </div>
+                        <div class="text-box">
+                            <h5>{{ lt.name }}</h5> 
+                            <p class="date-txt">{{ lt.des }}</p> 
+                        </div>
+                    </div>
+                    </a>
+                    {% endfor %}
+
+                </div>
+            </div>
+            
+            
+            
+            <section id="test-data" class="contents main-contents">
+                <div class="test-content">
+                    <h2>직접 서비스를 제공하고 물건을 판매하고 싶으신가요?</h2>
+                    <img src="/static/img/home/hands2.png" alt="">
+                    {% if request.session.id %}
+                    <a href="/proser/create?op=0"><div class="link-btn">등록하러가기</div></a>
+                    {% else %}
+                    <a href="/login"><div class="link-btn">등록하러가기</div></a>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
+
+<!-- footer -->
+{% block extra_script %} 
+
+<script>
+
+</script>
+
+{% endblock %}

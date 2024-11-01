@@ -1,0 +1,181 @@
+{% extends 'common/base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/login.css">
+<link rel="stylesheet" href="/static/css/proser/create.css">
+{% endblock %}
+
+
+{% block content %}
+
+<div id="explanation" class="contents main_contents">
+    <div class="exp-header">
+        <div>
+            <h3 class="font">
+                {% if op == '0' %}
+                PRODUCT
+                {% elif op == '1' %}
+                SERVICE
+                {% endif %}
+                
+            </h3>
+            <p>
+                {% if op == '0' %}
+                판매하실 제품을
+                {% elif op == '1' %}
+                이용하실 서비스를
+                {% endif %} 등록하시고 최소 금액을 설정해주세요!
+            </p>
+        </div>
+        <div>
+            <button class="custom-btn btn-4"><span onclick="create();">{% if op == '0' %}제품{% elif op == '1' %}서비스{% endif %} 등록</span></button>
+        </div>
+    </div>
+    <div class="exp-box">
+        
+        <!-- 사진 -->
+        <div class="exp-content img_wrap" id="img_wrap">
+            <img id="imgon" />
+        </div>
+        
+        <!-- 폼 -->
+        <div class="exp-content info_box">
+            <div class="exp-text">
+                <!-- 여기도 물건/서비스 구분해서 if문으로 바꾸기 (리스트 페이지 생성 후) -->
+                
+                <!-- <form onSubmit="return create(this);" enctype="multipart/form-data"> -->
+                <form id="input-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!-- 물건인지 서비스인지 구분 -->
+                    <input type="hidden" name="option" value={{ op }}>
+                    <!-- 작성자 아이디 -->
+                    {% if request.session.id %}
+                    {% endif %}
+                    <input type="hidden" name="uid" value={{request.session.id}}>
+
+                    <label name="name">
+                    {% if op == '0' %}제품{% elif op == '1' %}서비스{% endif %}명</label>
+                    <input type="text" name="name" placeholder="{% if op == '0' %}판매하실 제품명을 입력해주세요.{% elif op == '1' %}원하시는 서비스명을 입력하세요.{% endif %}">
+
+                    <label name="des">
+                    {% if op == '0' %}제품{% elif op == '1' %}서비스{% endif %}설명</label>
+                    <textarea type="textarea" name="des" placeholder="{% if op == '0' %}제품{% elif op == '1' %}서비스{% endif %}의 자세한 사항을 입력해주세요."></textarea>
+                    
+                    <label name="maxval">최소금액설정</label>
+                    <input type="number" name="maxval" placeholder="최소금액설정">
+                    
+                    <label name="img">
+                    {% if op == '0' %}제품{% elif op == '1' %}서비스{% endif %}이미지</label>
+                    <input type="file" name="img" id="img">
+                    
+                    <!-- <button class="custom-btn btn-4"><span>{% if op == '0' %}제품{% elif op == '1' %}서비스{% endif %} 업로드</span></button> -->
+                </form>
+            </div>
+            <!-- <img src="/static/img/product.png" alt="" class="exp-imgs"> -->
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}
+
+<!-- footer -->
+
+{% block extra_script %} 
+<script>
+    //이미지 미리보기
+    var sel_file;
+ 
+    $(document).ready(function() {
+        $("#img").on("change", handleImgFileSelect);
+    });
+ 
+    function handleImgFileSelect(e) {
+        
+        const box = document.querySelector(".info_box");
+        box.style.maxWidth = "500px";
+        
+        const imgbox = document.getElementById('img_wrap');
+        imgbox.style.maxWidth = "500px";
+        imgbox.style.display = "flex";
+
+        
+        
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+ 
+        var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
+ 
+        filesArr.forEach(function(f) {
+            if (!f.type.match(reg)) {
+                alert("확장자는 이미지 확장자만 가능합니다.");
+                return;
+            }
+ 
+            sel_file = f;
+ 
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#imgon").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+</script>
+
+<script>
+    // function create(obj) {
+    function create(){
+        
+    	const obj = document.querySelector('#input-form');
+        
+      if (!obj.name.value) {
+        alert("제품명을 입력해주세요.");
+        return false;
+      }  
+        
+     if (!obj.des.value) {
+        alert("제품설명을 입력해주세요.");
+        return false;
+      } 
+        
+      if (!obj.maxval.value) {
+        alert("최소금액을 입력해주세요.");
+        return false;
+      }
+        
+      var formData = new FormData();
+      formData.append('name', obj.name.value);
+      formData.append('des', obj.des.value);
+      formData.append('maxval', obj.maxval.value);
+      formData.append('option', obj.option.value);
+      formData.append('uid', obj.uid.value);
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+    if (obj.img.files[0] != null){
+        formData.append('img', obj.img.files[0]);
+        console.log(obj.img.files[0]);
+    }
+      
+
+      $.ajax({
+        type: 'POST',
+        url: 'https://g-oss-jeoyo-qrxlf.run.goorm.site/api/Service/',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (ajax_data) {
+            //해당 리스트로 이동하도록 변경
+          window.location.href = '/proser/list?op={{op}}';
+        },
+        error: function (xhr, status, error) {
+            alert(status, error); 
+        }
+      });
+      return false;
+    }
+
+</script>
+
+{% endblock %}

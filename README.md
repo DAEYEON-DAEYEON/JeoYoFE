@@ -1,6 +1,9 @@
 # Jeoyo
 
-### 페이지구성
+### 구현
+장고 템플릿 기반으로 모듈화하여 구성함.
+
+## 페이지구성
 - home
 - 서비스거래
 - 물건거래
@@ -8,9 +11,6 @@
 - 물건/서비스 거래 상세
 - 마이페이지
 - 로그인/로그아웃
-
-### 구현
-장고 템플릿 기반으로 모듈화하여 구성함.
 
 <img src="https://github.com/user-attachments/assets/c5573e5e-2ad4-4b99-905a-01c88585eeb9" style="width:600px;">
 <img src="https://github.com/user-attachments/assets/962c2934-fd2f-4fcd-8b46-210cb654da50" style="width:600px;">
